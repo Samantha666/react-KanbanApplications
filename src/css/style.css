@@ -68,7 +68,7 @@ ul{
 	content:'▼';
 }
 .checklist_task:first-child{
-	margin-top:10px;
+	margin-top:10px; 
 	padding-top:10px;
 	border-top:dash 1px #ddd;
 }
@@ -81,7 +81,7 @@ ul{
 	border:1px dashed #bbb;
 	width:100%; 
 	padding:10px;
-	margin-top:5px;
+	margin-top:5px;   
 	border-radius: 3px;
 }
   
