@@ -1,21 +1,31 @@
 import React, { Component,PropTypes } from 'react';
 import {render} from 'react-dom';
-
+import {DragDropContext} from 'react-dnd';
+import HTML5Backend from 'react-dnd-html5-backend';
 import List from './List';
 
 class KanbanBoard extends Component{
 	render(){
 		return (
 			<div className="app">
-				<List title="要做某事" taskCallbacks={this.props.taskCallbacks} cards={this.props.cards.filter((card) =>card.status =="todo")}/>
-				<List title="正在进行" taskCallbacks={this.props.taskCallbacks} cards={this.props.cards.filter((card) =>card.status =="in-progress")}/>
-				<List title="已完成的" taskCallbacks={this.props.taskCallbacks} cards={this.props.cards.filter((card) =>card.status =="done")}/>
+				<List id='todo' title="要做某事" taskCallbacks={this.props.taskCallbacks} 
+					cardCallbacks={this.props.cardCallbacks}
+					cards={this.props.cards.filter((card) =>card.status =="todo")}/>
+					
+				<List id='in-progress' title="正在进行" taskCallbacks={this.props.taskCallbacks} 
+					cardCallbacks={this.props.cardCallbacks}
+					cards={this.props.cards.filter((card) =>card.status =="in-progress")}/>
+					
+				<List id='done' title="已完成的" taskCallbacks={this.props.taskCallbacks} 
+					cardCallbacks={this.props.cardCallbacks}
+					cards={this.props.cards.filter((card) =>card.status =="done")}/>
 			</div>
 		)
 	}
 }
 KanbanBoard.propTypes={
 	cards:PropTypes.arrayOf(PropTypes.object),
-	taskCallbacks:PropTypes.object
+	taskCallbacks:PropTypes.object,
+	cardCallbacks:PropTypes.object
 }
-export default KanbanBoard;
+export default DragDropContext(HTML5Backend)(KanbanBoard);
