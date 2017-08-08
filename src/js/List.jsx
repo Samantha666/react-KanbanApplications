@@ -1,32 +1,36 @@
-import React, { Component,PropTypes } from 'react';
+import React, { Component, PropTypes } from 'react';
 import {render} from 'react-dom';
 import {DropTarget} from 'react-dnd';
+
 import Card from './Card';
 import constants from './constants';
 
-const listTargetSpec={
-	hover(props,monitor){
-		const draggedId=monitor.getItem().id;
-		props.cardCallbacks.updateStatus(draggedId,props.id);
+// 创建spec对象
+const listTargetSpec = {
+	hover(props, monitor){
+		const draggedId = monitor.getItem().id
+		props.cardCallbacks.updateStatus(draggedId, props.id)
 	}
 }
 
-function collect(connect,monitor){
+// 创建collect对象
+let collect = (connect, monitor)=>{
 	return {
-		connectDropTarget:connect.dropTarget()
+		connectDropTarget: connect.dropTarget()
 	}
 }
 
 class List extends Component{
 	render(){
-		const {connectDropTarget}=this.props;
-		let  cards=this.props.cards.map((card) =>{
-				return <Card key={card.id} 
-					taskCallbacks={this.props.taskCallbacks} 
-					cardCallbacks={this.props.cardCallbacks}
-					key={card.id} id={card.id} title={card.title} 
-					description={card.description} color={card.color} tasks={card.tasks} />
-			})
+		const {connectDropTarget} = this.props;
+
+		var cards=this.props.cards.map((card) =>{
+			return <Card key={card.id} 
+				taskCallbacks={this.props.taskCallbacks} 
+				cardCallbacks={this.props.cardCallbacks} 
+				id={card.id} title={card.title} description={card.description} 
+				color={card.color} tasks={card.tasks} />
+		})
 		
 		return connectDropTarget(
 			<div className="list">
@@ -36,11 +40,13 @@ class List extends Component{
 		)
 	}
 }
-List.propTypes={
-	title:PropTypes.string.isRequired,
-	cards:PropTypes.arrayOf(PropTypes.object),
-	taskCallbacks:PropTypes.object,
-	cardCallbacks:PropTypes.object,
-	connectDropTarget:PropTypes.func.isRequired
+
+List.propTypes = {
+	title: PropTypes.string.isRequired,
+	cards: PropTypes.arrayOf(PropTypes.object),
+	taskCallbacks: PropTypes.object,
+	cardCallbacks: PropTypes.object,
+	connectDropTarget: PropTypes.func.isRequired
 }
-export default DropTarget(constants.CARD,listTargetSpec,collect)(List);
+
+export default DropTarget(constants.CARD, listTargetSpec, collect)(List); 
